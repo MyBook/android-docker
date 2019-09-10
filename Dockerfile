@@ -1,5 +1,11 @@
 FROM phusion/baseimage:0.9.17
 
+# Set user id with default value
+ARG user_id=1000
+
+# Create user for CI
+RUN groupadd agent --gid $user_id && useradd --create-home -g agent --uid $user_id --shell /bin/bash agent
+
 # Install JAVA 8 
 RUN add-apt-repository ppa:openjdk-r/ppa
 
@@ -15,6 +21,12 @@ RUN java -version
 
 # Install Unzip
 RUN apt-get install --no-install-recommends -y unzip
+
+# Install git
+RUN apt-get install --no-install-recommends -y git
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV ANDROID_HOME="/opt/android/sdk" 
 
@@ -38,11 +50,15 @@ RUN sdkmanager "ndk-bundle"
 
 RUN sdkmanager "cmake;3.6.4111459"
 
-# Install git
-RUN apt-get install --no-install-recommends -y git
+# Add permissions to agent 
+RUN chown -R agent $ANDROID_HOME &&\
+    chmod -R g+w $ANDROID_HOME &&\
+    chmod +x $ANDROID_HOME/tools/bin/*
+
+# Set agent as User
+USER agent
 
 # Turn off gradle daemon
 RUN mkdir -p ~/.gradle/ && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+CMD ["bash"]

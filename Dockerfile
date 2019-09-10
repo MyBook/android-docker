@@ -60,5 +60,3 @@ USER agent
 
 # Turn off gradle daemon
 RUN mkdir -p ~/.gradle/ && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
-
-CMD ["bash"]

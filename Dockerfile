@@ -28,7 +28,7 @@ ENV ANDROID_HOME="/opt/android/sdk"
 RUN mkdir -p $ANDROID_HOME 
 
 # Create android group
-RUN groupadd android
+RUN groupadd --gid $user_id android
 
 # Create user for CI
 RUN useradd -G android --create-home --uid $user_id --shell /bin/bash agent

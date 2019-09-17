@@ -51,18 +51,15 @@ RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/an
 # Add to PATH Android SDK
 ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
-# Install Android Build Tool and Libraries
-RUN sdkmanager --update
-RUN sdkmanager "build-tools;28.0.3" 
-RUN sdkmanager "platforms;android-28" 
-RUN sdkmanager "platform-tools"
+# Install Android Build Tool and Libraries 
+RUN sdkmanager --update 1>/dev/null
+RUN sdkmanager "build-tools;28.0.3" 1>/dev/null 
+RUN sdkmanager "platforms;android-28" 1>/dev/null
+RUN sdkmanager "platform-tools" 1>/dev/null
 
 # Download and install Android NDK Libraries
-RUN curl --silent --show-error -o /var/tmp/ndk.zip "https://dl.google.com/android/repository/android-ndk-r20-darwin-x86_64.zip" && \
-    unzip -qq /var/tmp/ndk.zip -d $ANDROID_HOME && \
-    rm /var/tmp/ndk.zip && \
-    mv $ANDROID_HOME/android-ndk-r20 $ANDROID_HOME/ndk-bundle
-RUN sdkmanager "cmake;3.6.4111459"
+RUN sdkmanager "ndk-bundle" 1>/dev/null
+RUN sdkmanager "cmake;3.6.4111459" 1>/dev/null
 
 # Turn off gradle daemon
 RUN mkdir -p ~/.gradle/ && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties

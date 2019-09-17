@@ -51,9 +51,9 @@ RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/an
 # Add to PATH Android SDK
 ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
-# Install Android Build Tool and Libraries 
+# Install Android Build Tool and Libraries
 RUN sdkmanager --update 1>/dev/null
-RUN sdkmanager "build-tools;28.0.3" 1>/dev/null 
+RUN sdkmanager "build-tools;28.0.3" 1>/dev/null
 RUN sdkmanager "platforms;android-28" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null
 

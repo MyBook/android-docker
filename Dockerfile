@@ -34,7 +34,7 @@ RUN groupadd --gid $user_id android
 RUN useradd -G android --create-home --uid $user_id --shell /bin/bash agent
 
 # Add permisssions to android group
-RUN chgrp -R android ${ANDROID_HOME}
+RUN chgrp -R android $ANDROID_HOME
 
 RUN chmod g+w $ANDROID_HOME
 
@@ -56,8 +56,9 @@ RUN sdkmanager "build-tools;28.0.3"
 RUN sdkmanager "platforms;android-28" 
 RUN sdkmanager "platform-tools"
 
-# Install Android NDK Libraries
-RUN sdkmanager "ndk-bundle"
+# Download Install Android NDK Libraries
+RUN curl --silent --show-error -o /var/tmp/ndk.zip "https://dl.google.com/android/repository/android-ndk-r20-darwin-x86_64.zip"
+RUN unzip -qq /var/tmp/ndk.zip -d $ANDROID_HOME && rm /var/tmp/ndk.zip && mv $ANDROID_HOME/android-ndk-r20 $ANDROID_HOME/ndk-bundle
 RUN sdkmanager "cmake;3.6.4111459"
 
 # Turn off gradle daemon

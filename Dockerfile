@@ -42,9 +42,8 @@ RUN chmod g+w $ANDROID_HOME
 USER agent
 
 #Download and install Android SDK
-RUN curl -o /var/tmp/sdk.zip "https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip"
-
-RUN unzip -q /var/tmp/sdk.zip -d $ANDROID_HOME && rm /var/tmp/sdk.zip
+RUN curl --silent --show-error -o /var/tmp/sdk.zip "https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip"
+RUN unzip -qq /var/tmp/sdk.zip -d $ANDROID_HOME && rm /var/tmp/sdk.zip
 RUN mkdir -p "$ANDROID_HOME/licenses" || true
 RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
 

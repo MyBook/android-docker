@@ -22,11 +22,12 @@ RUN apt-get install --no-install-recommends -y git
 # Install wget
 RUN apt-get install --no-install-recommends -y wget
 
-# Install gradle wrapper
+# Install gradle
 RUN wget -q https://services.gradle.org/distributions/gradle-6.0.1-bin.zip \
     && unzip gradle-6.0.1-bin.zip -d /opt/gradle \
     && rm gradle-6.0.1-bin.zip
 RUN ls /opt/gradle/gradle-6.0.1
+ENV GRADLE_HOME=/opt/gradle/gradle-6.0.1
 ENV PATH=$PATH:/opt/gradle/gradle-6.0.1/bin
 RUN gradle -v
 

@@ -66,8 +66,6 @@ RUN sdkmanager "build-tools;29.0.1" 1>/dev/null
 RUN sdkmanager "platforms;android-28" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null
-# RUN sdkmanager "extras;google;m2repository" 1>/dev/null
-# RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 
 # Download and install Android NDK Libraries
 RUN sdkmanager "ndk-bundle" 1>/dev/null

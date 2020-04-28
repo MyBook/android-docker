@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:0.11
 
 USER root
 
@@ -28,7 +28,7 @@ ENV GRADLE_HOME /opt/gradle
 ENV GRADLE_USER_HOME /opt/.gradle/
 ENV ANDROID_HOME /opt/android-sdk
 
-ENV PATH=$GRADLE_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+ENV PATH=$GRADLE_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
 # Make android directory
 RUN mkdir -p $ANDROID_HOME 
@@ -38,9 +38,8 @@ RUN mkdir -p $GRADLE_USER_HOME
 # Download and install Android SDK
 ARG ANDROID_SDK_VERSION=6200805
 ARG COMMAND_LINE_TOOLS=commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip 
-RUN mkdir -p $ANDROID_HOME/cmdline-tools && \
-	curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google.com/android/repository/$COMMAND_LINE_TOOLS && \
-    unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME/cmdline-tools && \
+RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google.com/android/repository/$COMMAND_LINE_TOOLS && \
+    unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME && \
     rm /var/tmp/$COMMAND_LINE_TOOLS 
 
 # accept the license agreements of the SDK components
@@ -71,4 +70,6 @@ RUN sdkmanager "build-tools;29.0.3" 1>/dev/null
 RUN sdkmanager "platforms;android-28" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null
+RUN sdkmanager "extras;google;m2repository" 1>/dev/null
+RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 

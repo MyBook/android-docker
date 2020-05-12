@@ -53,8 +53,8 @@ ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tool
 
 # Install Android Build Tool and Libraries
 RUN sdkmanager --update 1>/dev/null
-RUN sdkmanager "build-tools;28.0.3" 1>/dev/null
-RUN sdkmanager "platforms;android-28" 1>/dev/null
+RUN sdkmanager "build-tools;29.0.2" 1>/dev/null
+RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null
 
 # Download and install Android NDK Libraries

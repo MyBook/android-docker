@@ -57,9 +57,5 @@ RUN sdkmanager "build-tools;29.0.2" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null
 
-# Download and install Android NDK Libraries
-# RUN sdkmanager "ndk-bundle" 1>/dev/null
-# RUN sdkmanager "cmake;3.6.4111459" 1>/dev/null
-
 # Turn off gradle daemon
 RUN mkdir -p ~/.gradle/ && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties

@@ -44,8 +44,8 @@ USER agent
 # download and install Kotlin compiler
 # https://github.com/JetBrains/kotlin/releases/latest
 ARG KOTLIN_VERSION=1.3.71
-RUN curl --silent --show-error -o /var/tmp/kotlin.zip https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_VERSION}/kotlin-compiler-${KOTLIN_VERSION}.zip && \
-    unzip /var/tmp/kotlin.zip -d /opt && \
+RUN curl --silent --show-error -o /var/tmp/kotlin.zip "https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_VERSION}/kotlin-compiler-${KOTLIN_VERSION}.zip" && \
+    unzip -qq /var/tmp/kotlin.zip -d /opt && \
     rm /var/tmp/kotlin.zip
 ENV KOTLIN_HOME /opt/kotlinc
     

@@ -41,6 +41,14 @@ RUN chmod g+w $ANDROID_HOME
 # Set agent as User
 USER agent
 
+# download and install Kotlin compiler
+# https://github.com/JetBrains/kotlin/releases/latest
+ARG KOTLIN_VERSION=1.3.71
+RUN curl --silent --show-error -o /var/tmp/kotlin.zip https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_VERSION}/kotlin-compiler-${KOTLIN_VERSION}.zip && \
+    unzip kotlin.zip -d /opt && \
+    rm kotlin.zip
+ENV KOTLIN_HOME /opt/kotlinc
+    
 # Download and install Android SDK
 RUN curl --silent --show-error -o /var/tmp/sdk.zip "https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip" && \
     unzip -qq /var/tmp/sdk.zip -d $ANDROID_HOME && \

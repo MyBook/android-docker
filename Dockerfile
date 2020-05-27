@@ -53,8 +53,8 @@ RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google
     rm /var/tmp/$COMMAND_LINE_TOOLS 
 
 # accept the license agreements of the SDK components
-RUN mkdir -p "$ANDROID_HOME/licenses" || true
-RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
+RUN yes | sdkmanager --update
+RUN yes | sdkmanager --licenses
 
 # Install Android Build Tool and Libraries
 RUN sdkmanager --update 1>/dev/null

@@ -24,16 +24,12 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # set the environment variables
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-ENV GRADLE_HOME /opt/gradle
-ENV GRADLE_USER_HOME /opt/.gradle/
 ENV ANDROID_HOME /opt/android-sdk
 
-ENV PATH=$GRADLE_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
 # Make android directory
-RUN mkdir -p $ANDROID_HOME 
-RUN mkdir -p $GRADLE_HOME
-RUN mkdir -p $GRADLE_USER_HOME
+RUN mkdir -p $ANDROID_HOME
 
 # Download and install Android SDK
 ARG ANDROID_SDK_VERSION=6200805
@@ -45,9 +41,6 @@ RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google
 # accept the license agreements of the SDK components
 RUN mkdir -p "$ANDROID_HOME/licenses" || true
 RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
-
-# Turn off gradle daemon
-RUN echo "org.gradle.daemon=false" >> "$GRADLE_USER_HOME/gradle.properties"
 
 # Create android group
 RUN groupadd --gid $user_id android
@@ -65,11 +58,11 @@ USER agent
 
 # Install Android Build Tool and Libraries
 RUN sdkmanager --update 1>/dev/null
-RUN sdkmanager "build-tools;28.0.3" 1>/dev/null
 RUN sdkmanager "build-tools;29.0.3" 1>/dev/null
-RUN sdkmanager "platforms;android-28" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null
 RUN sdkmanager "extras;google;m2repository" 1>/dev/null
 RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 
+# Turn off gradle daemon
+RUN echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties

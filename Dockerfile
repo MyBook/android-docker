@@ -65,4 +65,4 @@ RUN sdkmanager "extras;google;m2repository" 1>/dev/null
 RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 
 # Turn off gradle daemon
-RUN echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+RUN mkdir -p ~/.gradle/ && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties

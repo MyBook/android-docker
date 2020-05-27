@@ -26,8 +26,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV ANDROID_HOME /opt/android/sdk
 
-ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
-
 # Make android directory
 RUN mkdir -p $ANDROID_HOME 
 
@@ -51,6 +49,9 @@ ARG COMMAND_LINE_TOOLS=commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip
 RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google.com/android/repository/$COMMAND_LINE_TOOLS && \
     unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME && \
     rm /var/tmp/$COMMAND_LINE_TOOLS 
+    
+# Add to PATH Android SDK
+ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
 # accept the license agreements of the SDK components
 RUN yes | sdkmanager --update

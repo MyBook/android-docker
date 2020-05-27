@@ -47,11 +47,12 @@ USER agent
 ARG ANDROID_SDK_VERSION=6200805
 ARG COMMAND_LINE_TOOLS=commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip 
 RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google.com/android/repository/$COMMAND_LINE_TOOLS && \
-    unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME && \
+    unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME/cmdline-tools && \
     rm /var/tmp/$COMMAND_LINE_TOOLS 
     
 # Add to PATH Android SDK
-ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+# https://stackoverflow.com/questions/60440509/android-command-line-tools-sdkmanager-always-shows-warning-could-not-create-se
+ENV PATH=$ANDROID_HOME/cmdline-tools/tools:$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
 # accept the license agreements of the SDK components
 RUN yes | sdkmanager --update

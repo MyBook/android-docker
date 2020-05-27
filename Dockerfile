@@ -22,7 +22,9 @@ RUN apt-get install --no-install-recommends -y git
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV ANDROID_HOME="/opt/android/sdk" 
+# set the environment variables
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV ANDROID_HOME /opt/android/sdk
 
 # Make android directory
 RUN mkdir -p $ANDROID_HOME 
@@ -42,20 +44,25 @@ RUN chmod g+w $ANDROID_HOME
 USER agent
 
 # Download and install Android SDK
-RUN curl --silent --show-error -o /var/tmp/sdk.zip "https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip" && \
-    unzip -qq /var/tmp/sdk.zip -d $ANDROID_HOME && \
-    rm /var/tmp/sdk.zip
-RUN mkdir -p "$ANDROID_HOME/licenses" || true
-RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
-
+ARG ANDROID_SDK_VERSION=6200805
+ARG COMMAND_LINE_TOOLS=commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip 
+RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google.com/android/repository/$COMMAND_LINE_TOOLS && \
+    unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME/cmdline-tools && \
+    rm /var/tmp/$COMMAND_LINE_TOOLS 
+    
 # Add to PATH Android SDK
-ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+# https://stackoverflow.com/questions/60440509/android-command-line-tools-sdkmanager-always-shows-warning-could-not-create-se
+ENV PATH=$ANDROID_HOME/cmdline-tools/tools:$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+
+# accept the license agreements of the SDK components
+RUN yes | sdkmanager --update
+RUN yes | sdkmanager --licenses
 
 # Install Android Build Tool and Libraries
 RUN sdkmanager --update 1>/dev/null
-RUN sdkmanager "build-tools;29.0.2" 1>/dev/null
+
+RUN sdkmanager "build-tools;29.0.3" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null
-
-# Turn off gradle daemon
-RUN mkdir -p ~/.gradle/ && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+RUN sdkmanager "extras;google;m2repository" 1>/dev/null
+RUN sdkmanager "extras;android;m2repository" 1>/dev/null

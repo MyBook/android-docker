@@ -58,6 +58,7 @@ RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/an
 
 # Install Android Build Tool and Libraries
 RUN sdkmanager --update 1>/dev/null
+
 RUN sdkmanager "build-tools;29.0.3" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "platform-tools" 1>/dev/null

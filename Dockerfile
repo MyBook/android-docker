@@ -29,18 +29,7 @@ ENV ANDROID_HOME /opt/android-sdk
 ENV PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
 # Make android directory
-RUN mkdir -p $ANDROID_HOME
-
-# Download and install Android SDK
-ARG ANDROID_SDK_VERSION=6200805
-ARG COMMAND_LINE_TOOLS=commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip 
-RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google.com/android/repository/$COMMAND_LINE_TOOLS && \
-    unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME && \
-    rm /var/tmp/$COMMAND_LINE_TOOLS 
-
-# accept the license agreements of the SDK components
-RUN mkdir -p "$ANDROID_HOME/licenses" || true
-RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
+RUN mkdir -p $ANDROID_HOME 
 
 # Create android group
 RUN groupadd --gid $user_id android
@@ -55,6 +44,17 @@ RUN chmod g+w $ANDROID_HOME
 
 # Set agent as User
 USER agent
+
+# Download and install Android SDK
+ARG ANDROID_SDK_VERSION=6200805
+ARG COMMAND_LINE_TOOLS=commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip 
+RUN curl --silent --show-error -o /var/tmp/$COMMAND_LINE_TOOLS https://dl.google.com/android/repository/$COMMAND_LINE_TOOLS && \
+    unzip /var/tmp/$COMMAND_LINE_TOOLS -d $ANDROID_HOME && \
+    rm /var/tmp/$COMMAND_LINE_TOOLS 
+
+# accept the license agreements of the SDK components
+RUN mkdir -p "$ANDROID_HOME/licenses" || true
+RUN echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
 
 # Install Android Build Tool and Libraries
 RUN sdkmanager --update 1>/dev/null

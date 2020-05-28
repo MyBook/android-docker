@@ -8,10 +8,10 @@ RUN mkdir -p $ANDROID_HOME
 RUN VERSION=6200805; \
     FILE=commandlinetools-linux-${VERSION}_latest.zip; \
     URL=https://dl.google.com/android/repository/$FILE; \
-    curl $URL | bsdtar --extract --verbose --file - --directory $ANDROID_HOME; \
-    mkdir -p $ANDROID_HOME/cmdline-tools; \
-    mv $ANDROID_HOME/tools $ANDROID_HOME/cmdline-tools/latest; \
-    chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/*; \
+    curl $URL | bsdtar --extract --verbose --file - --directory $ANDROID_HOME && \
+    mkdir -p $ANDROID_HOME/cmdline-tools && \
+    mv $ANDROID_HOME/tools $ANDROID_HOME/cmdline-tools/latest && \
+    chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/* && \
     chmod -R o+w $ANDROID_HOME
 
 ENV ANDROID_BUILD_TOOLS_VERSION 29.0.3

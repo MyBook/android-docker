@@ -59,9 +59,9 @@ object AndroidSdk : BuildType({
                 
                 # Build image
                 docker build \
-                --build-arg user_id=${'$'}(id -u) \
-                --tag=${'$'}image_tag_with_commit \
-                .
+                    --build-arg user_id=${'$'}(id -u) \
+                    --tag=${'$'}image_tag_with_commit \
+                    android-sdk
                 
                 # Add tag with branch name
                 docker tag ${'$'}image_tag_with_commit ${'$'}image_tag_with_branch

@@ -1,4 +1,3 @@
-
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
@@ -7,7 +6,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 object Lokalise : BuildType({
 
-    name = "Lokalize Docker Image"
+    name = "Lokalise"
 
     vcs {
         root(DslContext.settingsRoot)

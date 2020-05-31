@@ -5,7 +5,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 object AndroidSdk : BuildType({
 
-    name = "Android SDK Docker Image"
+    name = "Android SDK"
 
     params {
         param("env.BUILD_BRANCH", "")

@@ -1,4 +1,5 @@
-import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
@@ -13,6 +14,23 @@ object JavaJdk : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
+    }
+
+    triggers {
+        vcs {
+            branchFilter = ""
+        }
+    }
+
+    failureConditions {
+        executionTimeoutMin = 5
+    }
+
+    features {
+        swabra {
+            forceCleanCheckout = true
+            verbose = true
+        }
     }
 
     val imageName = "mybook-android-java-jdk"
@@ -85,23 +103,6 @@ object JavaJdk : BuildType({
             scriptContent = "for tag in ${'$'}(cat tags_to_push); do docker push ${'$'}tag; done"
         }
 
-    }
-
-    triggers {
-        vcs {
-            branchFilter = ""
-        }
-    }
-
-    failureConditions {
-        executionTimeoutMin = 5
-    }
-
-    features {
-        swabra {
-            forceCleanCheckout = true
-            verbose = true
-        }
     }
 
 })

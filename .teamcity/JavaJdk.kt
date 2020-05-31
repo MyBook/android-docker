@@ -5,7 +5,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 object JavaJdk : BuildType({
 
-    name = "Java JDK Docker Image"
+    name = "Java Development Kit"
 
     params {
         param("env.BUILD_BRANCH", "")

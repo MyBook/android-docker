@@ -18,6 +18,14 @@ object AndroidSdk : BuildType({
     steps {
 
         script {
+            name = "Test"
+            scriptContent = """
+                echo "Hello World!"
+                env
+            """.trimIndent()
+        }
+
+        script {
             name = "Pull existing image from Registry"
             enabled = false
             scriptContent = """

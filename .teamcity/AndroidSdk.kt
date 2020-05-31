@@ -18,16 +18,7 @@ object AndroidSdk : BuildType({
     steps {
 
         script {
-            name = "Test"
-            scriptContent = """
-                echo "Hello World!"
-                env
-            """.trimIndent()
-        }
-
-        script {
             name = "Pull existing image from Registry"
-            enabled = false
             scriptContent = """
                 vcs_branch=${DslContext.settingsRoot.paramRefs.buildVcsBranch}
                 
@@ -48,7 +39,6 @@ object AndroidSdk : BuildType({
 
         script {
             name = "Build docker image"
-            enabled = false
             scriptContent = """
                 vcs_commit_id=${DslContext.settingsRoot.paramRefs.buildVcsNumber}
                 vcs_branch=${DslContext.settingsRoot.paramRefs.buildVcsBranch}
@@ -90,7 +80,6 @@ object AndroidSdk : BuildType({
 
         script {
             name = "Push image to remote Docker Registry"
-            enabled = false
             scriptContent = "for tag in ${'$'}(cat tags_to_push); do docker push ${'$'}tag; done"
         }
 

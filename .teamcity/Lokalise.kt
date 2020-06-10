@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
+import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
@@ -7,6 +8,12 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 object Lokalise : BuildType({
 
     name = "Lokalise"
+
+    dependencies {
+        snapshot(Base) {
+            onDependencyFailure = FailureAction.FAIL_TO_START
+        }
+    }
 
     vcs {
         root(DslContext.settingsRoot)

@@ -7,6 +7,12 @@ object AndroidSdk : BuildType({
 
     name = "Android SDK"
 
+    dependencies {
+        snapshot(JavaJdk) {
+            onDependencyFailure = FailureAction.FAIL_TO_START
+        }
+    }
+
     params {
         param("env.BUILD_BRANCH", "")
     }

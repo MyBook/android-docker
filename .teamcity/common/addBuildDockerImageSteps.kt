@@ -9,7 +9,7 @@ fun BuildSteps.addBuildDockerImageSteps(
         vararg buildArgs: Pair<String, String>
 ) {
 
-    val fullImageName = "ci-mybook-$imageName"
+    val fullImageName = "ci-mybook-android-$imageName"
 
     val buildArgsString = buildArgs
             .joinToString(

@@ -1,7 +1,6 @@
 import common.addBuildDockerImageSteps
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 object AndroidSdk : BuildType({
@@ -18,7 +17,10 @@ object AndroidSdk : BuildType({
 
     steps {
 
-        addBuildDockerImageSteps("android-sdk")
+        addBuildDockerImageSteps(
+                "android-sdk",
+                "PARENT_IMAGE_TAG" to "${'$'}image_tag_with_branch"
+        )
 
     }
 

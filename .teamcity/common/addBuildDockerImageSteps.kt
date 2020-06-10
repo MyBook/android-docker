@@ -4,9 +4,18 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.BuildSteps
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 
-fun BuildSteps.addBuildDockerImageSteps(imageName: String) {
+fun BuildSteps.addBuildDockerImageSteps(
+        imageName: String,
+        vararg buildArgs: Pair<String, String>
+) {
 
     val fullImageName = "ci-mybook-$imageName"
+
+    val buildArgsString = buildArgs
+            .joinToString(
+                    separator = " \\\n",
+                    postfix = " \\\n"
+            ) { "--build-arg ${it.first}=${it.second}" }
 
     script {
         name = "Pull existing image from Registry"
@@ -50,7 +59,7 @@ fun BuildSteps.addBuildDockerImageSteps(imageName: String) {
                 
                 # Build image
                 docker build \
-                    --build-arg user_id=${'$'}(id -u) \
+                    $buildArgsString
                     --tag=${'$'}image_tag_with_commit \
                     $imageName
                 

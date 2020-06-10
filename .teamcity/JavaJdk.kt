@@ -35,7 +35,10 @@ object JavaJdk : BuildType({
 
     steps {
 
-        addBuildDockerImageSteps("java-jdk")
+        addBuildDockerImageSteps(
+                "java-jdk",
+                "PARENT_IMAGE_TAG" to "${'$'}image_tag_with_branch"
+        )
 
     }
 

@@ -23,7 +23,7 @@ object Lokalise : BuildType({
 
         addBuildDockerImageSteps(
                 "lokalise",
-                "PARENT_IMAGE_TAG" to "${'$'}image_tag_with_branch"
+                "base"
         )
 
     }

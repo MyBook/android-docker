@@ -9,7 +9,7 @@ fun BuildSteps.addBuildDockerImageSteps(
         vararg buildArgs: Pair<String, String>
 ) {
 
-    val fullImageName = "ci-mybook-android-$imageName"
+    val repositoryPrefix = "%docker.registry.host%/ci-mybook-android-sdk"
 
     val buildArgsString = buildArgs
             .joinToString(
@@ -29,10 +29,10 @@ fun BuildSteps.addBuildDockerImageSteps(
                 echo ${'$'}safe_branch_name > safe_branch_name
                 echo "Safe branch name is [${'$'}safe_branch_name]"
                 
-                docker pull %docker.registry.host%/$fullImageName || true
-                docker pull %docker.registry.host%/$fullImageName:latest || true
-                docker pull %docker.registry.host%/$fullImageName:git-branch-master || true
-                docker pull %docker.registry.host%/$fullImageName:git-branch-${'$'}safe_branch_name || true
+                docker pull $repositoryPrefix/$imageName || true
+                docker pull $repositoryPrefix/$imageName:latest || true
+                docker pull $repositoryPrefix/$imageName:git-branch-master || true
+                docker pull $repositoryPrefix/$imageName:git-branch-${'$'}safe_branch_name || true
             """.trimIndent()
     }
 
@@ -46,14 +46,14 @@ fun BuildSteps.addBuildDockerImageSteps(
                 vcs_branch=${'$'}(echo "${'$'}vcs_branch" | sed "s/refs\/heads\///")
                 
                 # Create tag name with Git hash in it
-                image_tag_with_commit=$fullImageName:git-hash-${'$'}vcs_commit_id
+                image_tag_with_commit=$imageName:git-hash-${'$'}vcs_commit_id
                 echo "Image tag with commit is [${'$'}image_tag_with_commit]"
                 
                 # Replace '/' symbol with '-' in branch name
                 safe_branch_name=${'$'}(cat safe_branch_name)
                 echo "Safe branch name is [${'$'}safe_branch_name]"
                 
-                image_tag_with_branch=$fullImageName:git-branch-${'$'}safe_branch_name
+                image_tag_with_branch=$imageName:git-branch-${'$'}safe_branch_name
                 echo "Image tag with branch is [${'$'}image_tag_with_branch]"
                 
                 # Build image
@@ -65,8 +65,8 @@ fun BuildSteps.addBuildDockerImageSteps(
                 docker tag ${'$'}image_tag_with_commit ${'$'}image_tag_with_branch
                 
                 # Save additional tags into file 'tags_to_push'
-                echo "%docker.registry.host%/${'$'}image_tag_with_commit" >> tags_to_push
-                echo "%docker.registry.host%/${'$'}image_tag_with_branch" >> tags_to_push
+                echo "$repositoryPrefix/${'$'}image_tag_with_commit" >> tags_to_push
+                echo "$repositoryPrefix/${'$'}image_tag_with_branch" >> tags_to_push
                 
                 echo "Tags to push:"
                 for tag in ${'$'}(cat tags_to_push); do echo "  ${'$'}tag"; done

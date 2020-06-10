@@ -1,4 +1,4 @@
-FROM mybook-android-java-jdk:git-branch-master
+FROM ci-mybook-android-java-jdk:git-branch-master
 
 ENV ANDROID_HOME /opt/android/sdk
 

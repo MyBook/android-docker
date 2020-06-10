@@ -1,4 +1,4 @@
-FROM mybook-android-base:git-branch-master
+FROM ci-mybook-android-base:git-branch-master
 
 RUN add-apt-repository ppa:openjdk-r/ppa && \
     apt update && \

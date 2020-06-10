@@ -13,8 +13,7 @@ fun BuildSteps.addBuildDockerImageSteps(
 
     val buildArgsString = buildArgs
             .joinToString(
-                    separator = " \\\n",
-                    postfix = " \\\n"
+                    separator = " "
             ) { "--build-arg ${it.first}=${it.second}" }
 
     script {
@@ -58,8 +57,7 @@ fun BuildSteps.addBuildDockerImageSteps(
                 echo "Image tag with branch is [${'$'}image_tag_with_branch]"
                 
                 # Build image
-                docker build \
-                    $buildArgsString
+                docker build $buildArgsString \
                     --tag=${'$'}image_tag_with_commit \
                     $imageName
                 

@@ -6,7 +6,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 
 fun BuildSteps.addBuildDockerImageSteps(
         imageName: String,
-        vararg buildArgs: Pair<String, String>
+        parentImageName: String? = null
 ) {
 
     val repositoryHost = "%docker.registry.host%"
@@ -14,10 +14,24 @@ fun BuildSteps.addBuildDockerImageSteps(
     val repositoryPath = "$repositoryHost/$repositoryName"
     val imageRemotePath = "$repositoryPath:$imageName"
 
-    val buildArgsString = buildArgs
+    val pullParentImageCommand = parentImageName?.let { parentImage ->
+        """
+            parent_image_tag_version=$parentImage-git-branch-${'$'}safe_branch_name
+            docker pull $repositoryPath:${'$'}parent_image_tag_version
+            docker tag $repositoryPath:${'$'}parent_image_tag_version $repositoryName:${'$'}parent_image_tag_version
+        """.trimIndent()
+    } ?: ""
+
+    val buildArgs = mutableMapOf<String, String>()
+
+    parentImageName?.let {
+        buildArgs += "PARENT_IMAGE_TAG" to "git-branch-${'$'}safe_branch_name"
+    }
+
+    val buildArgsString = buildArgs.entries
             .joinToString(
                     separator = " "
-            ) { "--build-arg ${it.first}=${it.second}" }
+            ) { "--build-arg ${it.key}=${it.value}" }
 
     script {
         name = "Pull existing image from Registry"
@@ -36,6 +50,9 @@ fun BuildSteps.addBuildDockerImageSteps(
                 docker pull $imageRemotePath-latest || true
                 docker pull $imageRemotePath-git-branch-master || true
                 docker pull $imageRemotePath-git-branch-${'$'}safe_branch_name || true
+                
+                $pullParentImageCommand
+                
             """.trimIndent()
     }
 
@@ -62,6 +79,7 @@ fun BuildSteps.addBuildDockerImageSteps(
                 echo "Image tag with branch is [${'$'}image_tag_with_branch]"
                 
                 echo "Build image"
+                echo "$buildArgsString"
                 docker build $buildArgsString \
                     --tag=${'$'}image_tag_with_commit \
                     $imageName

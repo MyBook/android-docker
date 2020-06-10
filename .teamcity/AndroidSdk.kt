@@ -25,7 +25,7 @@ object AndroidSdk : BuildType({
 
         addBuildDockerImageSteps(
                 "android-sdk",
-                "PARENT_IMAGE_TAG" to "${'$'}image_tag_with_branch"
+                "java-jdk"
         )
 
     }

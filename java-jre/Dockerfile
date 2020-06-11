@@ -1,8 +1,8 @@
 ARG PARENT_IMAGE_TAG=git-branch-master
 
-FROM ci-mybook-base:$PARENT_IMAGE_TAG
+FROM ci-mybook-android:base-$PARENT_IMAGE_TAG
 
-RUN add-apt-repository ppa:openjdk-r/ppa; \
+RUN add-apt-repository ppa:openjdk-r/ppa && \
     apt update && \
     apt install --no-install-recommends -y software-properties-common && \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \

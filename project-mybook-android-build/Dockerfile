@@ -1,6 +1,6 @@
 ARG PARENT_IMAGE_TAG=git-branch-master
 
-FROM ci-mybook-android-sdk:android-sdk-$PARENT_IMAGE_TAG
+FROM ci-mybook-android:android-sdk-$PARENT_IMAGE_TAG
 
 # Install common used packages
 RUN apt update && \

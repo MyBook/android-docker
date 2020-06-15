@@ -1,6 +1,6 @@
 ARG PARENT_IMAGE_TAG=git-branch-master
 
-FROM ci-mybook-android-sdk:base-$PARENT_IMAGE_TAG
+FROM ci-mybook-android:base-$PARENT_IMAGE_TAG
 
 RUN add-apt-repository ppa:openjdk-r/ppa && \
     apt update && \

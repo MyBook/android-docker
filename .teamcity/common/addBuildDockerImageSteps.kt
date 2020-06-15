@@ -10,15 +10,16 @@ fun BuildSteps.addBuildDockerImageSteps(
 ) {
 
     val repositoryHost = "%docker.registry.host%"
-    val repositoryName = "ci-mybook-android-sdk"
+    val repositoryName = "ci-mybook-android"
     val repositoryPath = "$repositoryHost/$repositoryName"
-    val imageRemotePath = "$repositoryPath:$imageName"
+    val imageRemotePath = "$repositoryPath/$imageName"
 
     val pullParentImageCommand = parentImageName?.let { parentImage ->
         """
-            parent_image_tag_version=$parentImage-git-branch-${'$'}safe_branch_name
-            docker pull $repositoryPath:${'$'}parent_image_tag_version
-            docker tag $repositoryPath:${'$'}parent_image_tag_version $repositoryName:${'$'}parent_image_tag_version
+            parent_image=$repositoryName:$parentImage-git-branch-${'$'}safe_branch_name
+            parent_image_remote_path=$repositoryHost/${'$'}parent_image
+            docker pull ${'$'}parent_image_remote_path
+            docker tag ${'$'}parent_image_remote_path ${'$'}parent_image
         """.trimIndent()
     } ?: ""
 

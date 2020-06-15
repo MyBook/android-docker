@@ -1,3 +1,4 @@
+import common.addBuildDockerImageSteps
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
@@ -26,6 +27,12 @@ object FirebaseTools : BuildType({
             forceCleanCheckout = true
             verbose = true
         }
+    }
+
+    steps {
+
+        addBuildDockerImageSteps("firebase-tools")
+
     }
 
 })

@@ -1,6 +1,6 @@
 ARG PARENT_IMAGE_TAG=git-branch-master
 
-FROM ci-mybook-android-sdk:java-jdk-$PARENT_IMAGE_TAG
+FROM ci-mybook-android:java-jdk-$PARENT_IMAGE_TAG
 
 ENV ANDROID_HOME /opt/android/sdk
 

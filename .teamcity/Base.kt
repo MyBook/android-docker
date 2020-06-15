@@ -1,3 +1,4 @@
+import common.addBuildDockerImageSteps
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
@@ -6,6 +7,10 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 object Base : BuildType({
 
     name = "Base"
+
+    params {
+        param("env.BUILD_BRANCH", "")
+    }
 
     vcs {
         root(DslContext.settingsRoot)
@@ -26,6 +31,12 @@ object Base : BuildType({
             forceCleanCheckout = true
             verbose = true
         }
+    }
+
+    steps {
+
+        addBuildDockerImageSteps("base")
+
     }
 
 })

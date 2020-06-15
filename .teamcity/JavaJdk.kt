@@ -1,3 +1,4 @@
+import common.addBuildDockerImageSteps
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildType
 import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
@@ -12,6 +13,10 @@ object JavaJdk : BuildType({
         snapshot(Base) {
             onDependencyFailure = FailureAction.FAIL_TO_START
         }
+    }
+
+    params {
+        param("env.BUILD_BRANCH", "")
     }
 
     vcs {
@@ -33,6 +38,15 @@ object JavaJdk : BuildType({
             forceCleanCheckout = true
             verbose = true
         }
+    }
+
+    steps {
+
+        addBuildDockerImageSteps(
+                "java-jdk",
+                "base"
+        )
+
     }
 
 })

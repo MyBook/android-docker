@@ -10,4 +10,5 @@ project {
     buildType(AndroidBundleTool)
     buildType(Lokalise)
     buildType(FirebaseTools)
+    buildType(ProjectMyBookAndroid)
 }

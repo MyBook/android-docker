@@ -13,7 +13,8 @@ RUN VERSION=6200805; \
     curl $URL | bsdtar --extract --verbose --file - --directory $ANDROID_HOME && \
     mkdir -p $ANDROID_HOME/cmdline-tools && \
     mv $ANDROID_HOME/tools $ANDROID_HOME/cmdline-tools/latest && \
-    chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/*
+    chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/* && \
+    chmod -R o+w $ANDROID_HOME
 
 ENV ANDROID_BUILD_TOOLS_VERSION 29.0.3
 
@@ -31,11 +32,3 @@ RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 RUN sdkmanager "extras;google;m2repository" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" 1>/dev/null
-
-RUN groupadd android
-
-RUN chgrp -R android $ANDROID_HOME
-
-RUN useradd -s /bin/bash -m whale && usermod -aG android whale
-
-USER whale

@@ -32,5 +32,5 @@ RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 RUN sdkmanager "extras;google;m2repository" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" 1>/dev/null
-RUN sdkmanager "ndk;21.3.652147" 1>/dev/null
+RUN sdkmanager "ndk;21.3.6528147" 1>/dev/null
 RUN sdkmanager "cmake;3.10.2.4988404" 1>/dev/null

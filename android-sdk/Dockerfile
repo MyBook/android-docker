@@ -5,10 +5,7 @@ FROM ci-mybook-android:java-jdk-$PARENT_IMAGE_TAG
 ENV ANDROID_HOME /opt/android/sdk
 ENV ANDROID_NDK $ANDROID_HOME/ndk-bundle
 
-RUN mkdir -p $ANDROID_HOME && \
-    apt-get clean
-
-RUN apt install --no-install-recommends -y libnative-platform-jni
+RUN mkdir -p $ANDROID_HOME
 
 # https://stackoverflow.com/questions/60440509/android-command-line-tools-sdkmanager-always-shows-warning-could-not-create-se
 RUN VERSION=6200805; \

@@ -3,8 +3,9 @@ ARG PARENT_IMAGE_TAG=git-branch-master
 FROM ci-mybook-android:java-jdk-$PARENT_IMAGE_TAG
 
 ENV ANDROID_HOME /opt/android/sdk
+ENV ANDROID_NDK $ANDROID_HOME/ndk-bundle
 
-RUN mkdir -p $ANDROID_HOME 
+RUN mkdir -p $ANDROID_HOME
 
 # https://stackoverflow.com/questions/60440509/android-command-line-tools-sdkmanager-always-shows-warning-could-not-create-se
 RUN VERSION=6200805; \
@@ -18,7 +19,7 @@ RUN VERSION=6200805; \
 
 ENV ANDROID_BUILD_TOOLS_VERSION 29.0.3
 
-ENV PATH $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION:$PATH
+ENV PATH $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION:$ANDROID_NDK:$PATH
 
 RUN yes | sdkmanager --update
 
@@ -32,3 +33,5 @@ RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 RUN sdkmanager "extras;google;m2repository" 1>/dev/null
 RUN sdkmanager "platforms;android-29" 1>/dev/null
 RUN sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" 1>/dev/null
+RUN sdkmanager "ndk;21.3.6528147" 1>/dev/null
+RUN sdkmanager "cmake;3.10.2.4988404" 1>/dev/null

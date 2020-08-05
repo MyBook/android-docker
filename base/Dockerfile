@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:bionic-1.0.0
 
 SHELL ["bash", "-c"]
 

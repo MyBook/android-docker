@@ -17,12 +17,15 @@ RUN VERSION=6858069; \
     chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/* && \
     chmod o+w -R $ANDROID_HOME
 
-ENV PATH $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools:$PATH
+ENV PATH $ANDROID_HOME/cmdline-tools/latest/bin:$PATH
 
 # accept the license agreements of the SDK components
 RUN yes | sdkmanager --licenses
 
 RUN sdkmanager --update 1>/dev/null
+
+RUN sdkmanager "tools" 1>/dev/null
+ENV PATH $ANDROID_HOME/tools:$PATH
 
 RUN sdkmanager "platform-tools" 1>/dev/null
 ENV PATH $ANDROID_HOME/platform-tools:$PATH

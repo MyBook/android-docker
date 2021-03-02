@@ -8,8 +8,12 @@ RUN apt update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN sdkmanager "build-tools;30.0.3" 1>/dev/null
+RUN sdkmanager "emulator" 1>/dev/null
+
 RUN sdkmanager "extras;android;m2repository" 1>/dev/null
 RUN sdkmanager "extras;google;m2repository" 1>/dev/null
+
 RUN sdkmanager "platforms;android-30" 1>/dev/null
 
 RUN sdkmanager "cmake;3.10.2.4988404" 1>/dev/null

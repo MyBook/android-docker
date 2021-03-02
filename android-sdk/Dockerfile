@@ -8,12 +8,12 @@ ENV ANDROID_NDK $ANDROID_HOME/ndk-bundle
 RUN mkdir -p $ANDROID_HOME
 
 # https://stackoverflow.com/questions/60440509/android-command-line-tools-sdkmanager-always-shows-warning-could-not-create-se
-RUN VERSION=6200805; \
+RUN VERSION=6858069; \
     FILE=commandlinetools-linux-${VERSION}_latest.zip; \
     URL=https://dl.google.com/android/repository/$FILE; \
     curl $URL | bsdtar --extract --verbose --file - --directory $ANDROID_HOME && \
     mkdir -p $ANDROID_HOME/cmdline-tools && \
-    mv $ANDROID_HOME/tools $ANDROID_HOME/cmdline-tools/latest && \
+    mv $ANDROID_HOME/cmdline-tools $ANDROID_HOME/cmdline-tools/latest && \
     chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/* && \
     chmod -R o+w $ANDROID_HOME
 

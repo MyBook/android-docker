@@ -17,9 +17,7 @@ RUN VERSION=6200805; \
     chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/* && \
     chmod -R o+w $ANDROID_HOME
 
-ENV ANDROID_BUILD_TOOLS_VERSION 29.0.3
-
-ENV PATH $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION:$ANDROID_NDK:$PATH
+ENV PATH $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_NDK:$PATH
 
 RUN yes | sdkmanager --update
 
@@ -29,4 +27,3 @@ RUN yes | sdkmanager --licenses
 RUN sdkmanager --update 1>/dev/null
 
 RUN sdkmanager "platform-tools" 1>/dev/null
-RUN sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" 1>/dev/null

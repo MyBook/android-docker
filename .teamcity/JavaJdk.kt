@@ -43,8 +43,8 @@ object JavaJdk : BuildType({
     steps {
 
         addBuildDockerImageSteps(
-                "java-jdk",
-                "base"
+            "java-jdk",
+            "base"
         )
 
     }

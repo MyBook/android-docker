@@ -24,8 +24,8 @@ object AndroidSdk : BuildType({
     steps {
 
         addBuildDockerImageSteps(
-                "android-sdk",
-                "java-jdk"
+            "android-sdk",
+            "java-jdk"
         )
 
     }

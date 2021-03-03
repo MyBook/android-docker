@@ -22,8 +22,8 @@ object Lokalise : BuildType({
     steps {
 
         addBuildDockerImageSteps(
-                "lokalise",
-                "base"
+            "lokalise",
+            "base"
         )
 
     }

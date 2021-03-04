@@ -6,15 +6,21 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.FailureAction
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
-open class DockerImageBuildType(params: Params) : BuildType({
+open class DockerImageBuildType(
+    name: String,
+    description: String? = null,
+    parent: DockerImageBuildType? = null,
+    executionTimeoutMin: Int,
+    private val imageName: String,
+) : BuildType({
 
-    name = params.name
+    this.name = name
 
-    params.description?.let {
-        description = it
+    description?.let {
+        this.description = it
     }
 
-    params.parent?.let { dependsOn ->
+    parent?.let { dependsOn ->
         dependencies {
             snapshot(dependsOn) {
                 onDependencyFailure = FailureAction.FAIL_TO_START
@@ -33,8 +39,8 @@ open class DockerImageBuildType(params: Params) : BuildType({
     steps {
 
         addBuildDockerImageSteps(
-            imageName = params.imageName,
-            parentImageName = params.parent?.imageName,
+            imageName = imageName,
+            parentImageName = parent?.imageName,
         )
 
     }
@@ -46,7 +52,7 @@ open class DockerImageBuildType(params: Params) : BuildType({
     }
 
     failureConditions {
-        executionTimeoutMin = params.executionTimeoutMin
+        this.executionTimeoutMin = executionTimeoutMin
     }
 
     features {
@@ -56,16 +62,4 @@ open class DockerImageBuildType(params: Params) : BuildType({
         }
     }
 
-}) {
-
-    private val imageName: String = params.imageName
-
-    data class Params(
-        val name: String,
-        val description: String? = null,
-        val imageName: String,
-        val parent: DockerImageBuildType? = null,
-        val executionTimeoutMin: Int,
-    )
-
-}
+})

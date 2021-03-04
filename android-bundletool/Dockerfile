@@ -1,6 +1,6 @@
 FROM adoptopenjdk/openjdk8:jdk8u252-b09-alpine-slim
 
-RUN VERSION=1.0.0; \
+RUN VERSION=1.5.0; \
     FILE_NAME=bundletool-all-${VERSION}.jar; \
     DIR=/opt/android/bundletool; \
     FILE_PATH=$DIR/lib/$FILE_NAME; \

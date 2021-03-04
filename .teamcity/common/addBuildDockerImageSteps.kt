@@ -5,8 +5,8 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.DslContext
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 
 fun BuildSteps.addBuildDockerImageSteps(
-        imageName: String,
-        parentImageName: String? = null
+    imageName: String,
+    parentImageName: String? = null
 ) {
 
     val repositoryHost = "%docker.registry.host%"
@@ -30,9 +30,9 @@ fun BuildSteps.addBuildDockerImageSteps(
     }
 
     val buildArgsString = buildArgs.entries
-            .joinToString(
-                    separator = " "
-            ) { "--build-arg ${it.key}=${it.value}" }
+        .joinToString(
+            separator = " "
+        ) { "--build-arg ${it.key}=${it.value}" }
 
     script {
         name = "Pull existing image from Registry"

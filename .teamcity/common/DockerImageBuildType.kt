@@ -9,7 +9,10 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 open class DockerImageBuildType(params: Params) : BuildType({
 
     name = params.name
-    description = params.description
+
+    params.description?.let {
+        description = it
+    }
 
     params.parent?.let { dependsOn ->
         dependencies {
@@ -57,9 +60,9 @@ open class DockerImageBuildType(params: Params) : BuildType({
 
     data class Params(
         val name: String,
-        val description: String,
+        val description: String? = null,
         val imageName: String,
-        val parent: ParentBuildType?,
+        val parent: ParentBuildType? = null,
         val executionTimeoutMin: Int,
     ) {
 

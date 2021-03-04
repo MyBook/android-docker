@@ -7,6 +7,7 @@ project {
     buildType(Base)
     buildType(JavaJdk)
     buildType(AndroidSdk)
+    buildType(AndroidEmulator)
     buildType(AndroidBundleTool)
     buildType(Lokalise)
     buildType(FirebaseTools)

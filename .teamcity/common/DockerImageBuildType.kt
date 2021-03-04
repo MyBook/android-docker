@@ -16,7 +16,7 @@ open class DockerImageBuildType(params: Params) : BuildType({
 
     params.parent?.let { dependsOn ->
         dependencies {
-            snapshot(dependsOn.buildType) {
+            snapshot(dependsOn) {
                 onDependencyFailure = FailureAction.FAIL_TO_START
             }
         }
@@ -33,8 +33,8 @@ open class DockerImageBuildType(params: Params) : BuildType({
     steps {
 
         addBuildDockerImageSteps(
-            params.imageName,
-            params.parent?.imageName,
+            imageName = params.imageName,
+            parentImageName = params.parent?.imageName,
         )
 
     }
@@ -58,19 +58,14 @@ open class DockerImageBuildType(params: Params) : BuildType({
 
 }) {
 
+    private val imageName: String = params.imageName
+
     data class Params(
         val name: String,
         val description: String? = null,
         val imageName: String,
-        val parent: ParentBuildType? = null,
+        val parent: DockerImageBuildType? = null,
         val executionTimeoutMin: Int,
-    ) {
-
-        data class ParentBuildType(
-            val buildType: BuildType,
-            val imageName: String,
-        )
-
-    }
+    )
 
 }

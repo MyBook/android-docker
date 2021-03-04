@@ -4,7 +4,7 @@ object AndroidSdk : DockerImageBuildType(
     Params(
         name = "Android SDK",
         imageName = "android-sdk",
-        parent = Params.ParentBuildType(JavaJdk, "java-jdk"),
+        parent = JavaJdk,
         executionTimeoutMin = 20,
     )
 )

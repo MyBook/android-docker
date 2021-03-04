@@ -4,7 +4,7 @@ object JavaJdk : DockerImageBuildType(
     Params(
         name = "Java Development Kit",
         imageName = "java-jdk",
-        parent = Params.ParentBuildType(Base, "base"),
+        parent = Base,
         executionTimeoutMin = 5,
     )
 )

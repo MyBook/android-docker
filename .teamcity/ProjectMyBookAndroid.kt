@@ -5,7 +5,7 @@ object ProjectMyBookAndroid : DockerImageBuildType(
         name = "Project MyBook Android",
         description = "Image for MyBook Android project",
         imageName = "project-mybook-android-build",
-        parent = Params.ParentBuildType(AndroidSdk, "android-sdk"),
+        parent = AndroidSdk,
         executionTimeoutMin = 10,
     )
 )

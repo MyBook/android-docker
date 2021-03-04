@@ -2,7 +2,7 @@ import common.DockerImageBuildType
 
 object AndroidSdk : DockerImageBuildType(
     name = "Android SDK",
-    imageName = "android-sdk",
+    dirName = "android-sdk",
     parent = JavaJdk,
     executionTimeoutMin = 20,
 )

@@ -2,6 +2,6 @@ import common.DockerImageBuildType
 
 object AndroidBundleTool : DockerImageBuildType(
     name = "Android BundleTool",
-    imageName = "android-bundletool",
+    dirName = "android-bundletool",
     executionTimeoutMin = 5,
 )

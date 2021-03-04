@@ -2,7 +2,7 @@ import common.DockerImageBuildType
 
 object Lokalise : DockerImageBuildType(
     name = "Lokalise",
-    imageName = "lokalise",
+    dirName = "lokalise",
     parent = Base,
     executionTimeoutMin = 20,
 )

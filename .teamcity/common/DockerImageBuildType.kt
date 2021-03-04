@@ -11,8 +11,10 @@ open class DockerImageBuildType(
     description: String? = null,
     parent: DockerImageBuildType? = null,
     executionTimeoutMin: Int,
-    private val imageName: String,
+    dirName: String,
 ) : BuildType({
+
+    val dockerImageName: String = dirName
 
     this.name = name
 
@@ -33,14 +35,17 @@ open class DockerImageBuildType(
     }
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(
+            DslContext.settingsRoot,
+            "+:$dirName",
+        )
     }
 
     steps {
 
         addBuildDockerImageSteps(
-            imageName = imageName,
-            parentImageName = parent?.imageName,
+            imageName = dockerImageName,
+            parentImageName = parent?.dockerImageName,
         )
 
     }
@@ -62,4 +67,8 @@ open class DockerImageBuildType(
         }
     }
 
-})
+}) {
+
+    private val dockerImageName: String = dirName
+
+}

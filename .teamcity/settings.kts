@@ -10,6 +10,7 @@ project {
     buildType(AndroidEmulator)
     buildType(AndroidBundleTool)
     buildType(Lokalise)
+    buildType(GoogleCloudSdk)
     buildType(FirebaseTools)
     buildType(ProjectMyBookAndroid)
 }

@@ -37,7 +37,6 @@ open class DockerImageBuildType(
     vcs {
         root(
             DslContext.settingsRoot,
-            "+:$dirName",
         )
     }
 

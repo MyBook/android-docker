@@ -8,7 +8,7 @@ RUN apt update && \
     apt purge -y wget && \
     add-apt-repository 'deb https://apt.corretto.aws stable main' && \
     apt update && \
-    apt install --no-install-recommends -y java-15-amazon-corretto-jdk && \
+    apt install --no-install-recommends -y java-17-amazon-corretto-jdk && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV JAVA_HOME /usr/lib/jvm/java-15-amazon-corretto
+ENV JAVA_HOME /usr/lib/jvm/java-17-amazon-corretto
